@@ -84,7 +84,7 @@ function ui:BasePanel()
 		Text = '',
 		Font = Enum.Font.Code,
 		AnchorPoint = V2_Center,
-		BackgroundColor3 = rgb(45,45,45)
+		BackgroundColor3 = rgb(45,45,45),
 		PlaceholderColor3 = rgb(178,178,178),
 		TextColor3 = Color_holder.white,
 		TextScaled = true,

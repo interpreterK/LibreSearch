@@ -4,8 +4,8 @@
     "$className": "DataModel",
 
     "Workspace": {
-      "Plugin": {
-        "$path": "Plugin"
+      "LibreSearch": {
+        "$path": "LibreSearch"
       }
     }
   }
