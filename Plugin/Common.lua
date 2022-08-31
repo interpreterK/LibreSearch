@@ -1,6 +1,13 @@
 local Vars = {}
 Vars.__index = Vars
 
+Vars.ptrace = function(func)
+	local b,e = pcall(func)
+	if not b then
+		warn(e, debug.traceback())
+	end
+end
+
 Vars.S = setmetatable({}, {
 	__index = function(self,i)
 		if not rawget(self,i) then
@@ -13,12 +20,18 @@ Vars.S = setmetatable({}, {
 Vars.New = function(Inst, Parent, Props)
 	local i = Instance.new(Inst)
 	for prop, val in next, Props or {} do
-		pcall(function()
+		Vars.ptrace(function()
 			i[prop] = val
 		end)
 	end
 	i.Parent = Parent
 	return i
+end
+
+Vars.Remove = function(Inst)
+	Vars.ptrace(function()
+		Inst:Destroy()
+	end)
 end
 
 function Vars.write(Var, Func)
