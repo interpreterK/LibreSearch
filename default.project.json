@@ -1,0 +1,12 @@
+{
+  "name": "LibreSearch",
+  "tree": {
+    "$className": "DataModel",
+
+    "Workspace": {
+      "Plugin": {
+        "$path": "Plugin"
+      }
+    }
+  }
+}
