@@ -31,14 +31,14 @@ end
 function ui:BasePanel()
 	assert(self.Widget, 'BasePanel does not have a Widget element')
 
-	self.Ui_objs.Panel = New('Frame', self.Widget, {
+	self.Ui_objs.MainPanel = New('Frame', self.Widget, {
 		Name = 'MainPanel',
 		AnchorPoint = V2_Center,
 		BackgroundColor3 = Color_holder.black,
 		Position = UD2_s(.5,.5),
 		Size = UD2_s(1,1.250),
 	})
-	self.Ui_objs.OptionsPanel = New('Frame', self.Ui_objs.Panel, {
+	self.Ui_objs.OptionsPanel = New('Frame', self.Ui_objs.MainPanel, {
 		Name = 'OptionsPanel',
 		AnchorPoint = V2_Center,
 		BackgroundColor3 = rgb(25,25,25),
@@ -47,7 +47,7 @@ function ui:BasePanel()
 		Position = UD2_s(.855,.499),
 		Size = UD2_s(.272,.761),
 	})
-	self.Ui_objs.ResultsField = New('ScrollingFrame', self.Ui_objs.Panel, {
+	self.Ui_objs.ResultsField = New('ScrollingFrame', self.Ui_objs.MainPanel, {
 		Name = 'ResultsField',
 		AnchorPoint = V2_Center,
 		BackgroundColor3 = rgb(50,50,50),
@@ -66,10 +66,10 @@ function ui:BasePanel()
 	self.Ui_objs.UIListLayout = New('UIListLayout', self.Ui_objs.ResultsField, {
 		Padding = UD(0,0),
 	})
-	self.Ui_objs.SearchButton = New('TextButton', self.Ui_objs.Panel, {
+	self.Ui_objs.SearchButton = New('TextButton', self.Ui_objs.MainPanel, {
 		Name = 'Search',
-		Text = 'Search Scripts',
-		Font = Enum.Font.SourceSansBold,
+		Text = 'Search...',
+		Font = Enum.Font.Ubuntu,
 		TextScaled = true,
 		AnchorPoint = V2(.5,.5,.5),
 		TextColor3 = C3(1,1,1),
@@ -78,13 +78,14 @@ function ui:BasePanel()
 		Position = UD2_s(.629,.145),
 		Size = UD2_s(.159,.054),
 	})
-	self.Ui_objs.SearchField = New('TextBox', self.Ui_objs.Panel, {
+	self.Ui_objs.SearchField = New('TextBox', self.Ui_objs.MainPanel, {
 		Name = 'SearchField',
 		PlaceholderText = 'Find...',
 		Text = '',
 		Font = Enum.Font.Code,
 		AnchorPoint = V2_Center,
 		BackgroundColor3 = rgb(45,45,45),
+		BorderColor3 = Color_holder.black,
 		PlaceholderColor3 = rgb(178,178,178),
 		TextColor3 = Color_holder.white,
 		TextScaled = true,
@@ -92,7 +93,7 @@ function ui:BasePanel()
 		Position = UD2_s(.276,.146),
 		Size = UD2_s(.534,.053),
 	})
-	self.Ui_objs.Results = New('TextLabel', self.Ui_objs.Panel, {
+	self.Ui_objs.Results = New('TextLabel', self.Ui_objs.MainPanel, {
 		Name = 'Results',
 		Text = 'Results: 0',
 		Font = Enum.Font.Code,
@@ -104,14 +105,29 @@ function ui:BasePanel()
 		TextColor3 = Color_holder.white,
 	})
 	self.Ui_objs.OptionsTitle = New('TextLabel', self.Ui_objs.OptionsPanel, {
-		Name = 'OptionsPanel',
+		Name = 'OptionsTitle',
 		Text = 'Options',
 		TextScaled = true,
 		Font = Enum.Font.Ubuntu,
 		AnchorPoint = V2_Center,
 		TextColor3 = Color_holder.white,
-		Position = UD2_s(.499,.035),
-		Size = UD2_s(1,.071),
+		BackgroundColor3 = rgb(51,51,51),
+		Position = UD2_s(.502,.041),
+		Size = UD2_s(.95,.055),
+	})
+	self.Ui_objs.UICorner = New('UICorner', self.Ui_objs.OptionsTitle, {
+		CornerRadius = UD(0,8)
+	})
+	self.Ui_objs.NoResults = New('TextLabel', self.Ui_objs.MainPanel, {
+		Name = 'NoResults',
+		Text = 'No Results To Display.',
+		TextScaled = true,
+		Font = Enum.Font.Ubuntu,
+		AnchorPoint = V2_Center,
+		TextColor3 = Color_holder.white,
+		BackgroundTransparency = 1,
+		Position = UD2_s(.358,.499),
+		Size = UD2_s(.255,.089)
 	})
 
 	return self.Ui_objs
