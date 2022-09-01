@@ -4,8 +4,8 @@ local ui = {
 }
 ui.__index = ui
 
-local CommonVars = require(script.Parent:WaitForChild("Common"))
-local New, Remove = CommonVars.New, CommonVars.Remove
+local Common = require(script.Parent:WaitForChild("Common"))
+local New, Remove = Common.New, Common.Remove
 
 local V2, UD2_s, UD, UD2 = Vector2.new, UDim2.fromScale, UDim.new, UDim2.new
 local C3, rgb, hex = Color3.new, Color3.fromRGB, Color3.fromHex
@@ -63,7 +63,7 @@ function ui:BasePanel()
 		MidImage = 'rbxassetid://4710023238',
 		TopImage = 'rbxassetid://4710022881',
 	})
-	self.Ui_objs.UIListLayout = New('UIListLayout', self.Ui_objs.ResultsField, {
+	New('UIListLayout', self.Ui_objs.ResultsField, {
 		Padding = UD(0,0),
 	})
 	self.Ui_objs.SearchButton = New('TextButton', self.Ui_objs.MainPanel, {
@@ -103,6 +103,7 @@ function ui:BasePanel()
 		Position = UD2_s(.074,.867),
 		Size = UD2_s(.131,.043),
 		TextColor3 = Color_holder.white,
+		TextXAlignment = Enum.TextXAlignment.Left
 	})
 	self.Ui_objs.OptionsTitle = New('TextLabel', self.Ui_objs.OptionsPanel, {
 		Name = 'OptionsTitle',
@@ -115,7 +116,7 @@ function ui:BasePanel()
 		Position = UD2_s(.502,.041),
 		Size = UD2_s(.95,.055),
 	})
-	self.Ui_objs.UICorner = New('UICorner', self.Ui_objs.OptionsTitle, {
+	New('UICorner', self.Ui_objs.OptionsTitle, {
 		CornerRadius = UD(0,8)
 	})
 	self.Ui_objs.NoResults = New('TextLabel', self.Ui_objs.MainPanel, {
@@ -129,52 +130,75 @@ function ui:BasePanel()
 		Position = UD2_s(.358,.499),
 		Size = UD2_s(.255,.089)
 	})
+	self.Ui_objs.ShowCoreGuis_Button = New('TextButton', self.Ui_objs.OptionsPanel, {
+		Text = '',
+		BackgroundColor3 = C3(0,1,0),
+		BorderColor3 = Color_holder.white,
+		BorderSizePixel = 3,
+		AnchorPoint = V2_Center,
+		Position = UD2_s(.093,.16),
+		Size = UD2_s(.105,.079)
+	})
+	self.Ui_objs.ShowCoreGuis_Text = New('TextLabel', self.Ui_objs.ShowCoreGuis_Button, {
+		Text = 'Show CoreGui Scripts',
+		TextScaled = true,
+		TextColor3 = Color_holder.white,
+		BackgroundTransparency = 1,
+		AnchorPoint = V2_Center,
+		Position = UD2_s(5.134,.489),
+		Size = UD2_s(7.471,1.064),
+		TextXAlignment = Enum.TextXAlignment.Left
+	})
 
 	return self.Ui_objs
 end
 
 function ui:CreateListItem(ScriptType, Path, QueueDetails)
-	assert(self.Ui_objs.Panel)
-
 	local Queue = {}
 	Queue.Frame = New('Frame', self.Ui_objs.ResultsField, {
 		Name = 'Result',
 		BackgroundColor3 = rgb(0,75,36),
 		BorderColor3 = Color_holder.white,
-		Size = UD2_s(1,.05),
+		Size = UD2_s(1,.276),
 		BorderSizePixel = 5,
 	})
 	Queue.ImageLabel = New('ImageLabel', Queue.Frame, {
 		Image = Class_icons[ScriptType],
 		ScaleType = Enum.ScaleType.Fit,
 		AnchorPoint = V2_Center,
-		Position = UD2_s(.218,.031),
-		Size = UD2_s(.031,0379),
+		Position = UD2_s(.015,.218),
+		Size = UD2_s(.031,.379),
 		BackgroundTransparency = 1,
 	})
 	Queue.OpenScript = New('TextButton', Queue.Frame, {
 		Name = 'OpenScript',
 		Text = 'Open Script',
 		TextColor3 = Color_holder.white,
-		Font = Enum.Font.SourceSansBold,
+		Font = Enum.Font.Legacy,
 		TextScaled = true,
 		AnchorPoint = V2_Center,
-		BackgroundColor3 = rgb(15,128,255),
-		Position = UD2_s(.863,.687),
-		Size = UD2_s(.237,.431),
+		BackgroundColor3 = rgb(34,34,34),
+		Position = UD2_s(.872,.267),
+		Size = UD2_s(.237,.374),
 		BorderSizePixel = 0,
+	})
+	New('UICorner', Queue.OpenScript, {
+		CornerRadius = UD(0,8)
 	})
 	Queue.SelectInExplorer = New('TextButton', Queue.Frame, {
 		Name = 'SelectScript',
 		Text = 'Select In Explorer',
 		TextColor3 = Color_holder.white,
-		Font = Enum.Font.SourceSansBold,
+		Font = Enum.Font.Legacy,
 		TextScaled = true,
 		AnchorPoint = V2_Center,
-		BackgroundColor3 = rgb(253,102,102),
-		Position = UD2_s(.863,.278),
+		BackgroundColor3 = rgb(34,34,34),
+		Position = UD2_s(.872,.737),
 		Size = UD2_s(.237,.398),
 		BorderSizePixel = 0,
+	})
+	New('UICorner', Queue.SelectInExplorer, {
+		CornerRadius = UD(0,8)
 	})
 	Queue.Path = New('TextLabel', Queue.Frame, {
 		Text = Path,
@@ -186,16 +210,19 @@ function ui:CreateListItem(ScriptType, Path, QueueDetails)
 		TextColor3 = Color_holder.white,
 		Position = UD2_s(.392,.204),
 		Size = UD2_s(.706,.333),
+		TextXAlignment = Enum.TextXAlignment.Left
 	})
 	Queue.FoundInfo = New('TextLabel', Queue.Frame, {
 		Text = QueueDetails,
 		Font = Enum.Font.Code,
 		TextColor3 = Color_holder.white,
 		TextScaled = true,
+		RichText = true,
 		BackgroundTransparency = 1,
 		AnchorPoint = V2_Center,
 		Position = UD2_s(.373,.71),
 		Size = UD2_s(.745,.333),
+		TextXAlignment = Enum.TextXAlignment.Left
 	})
 
 	insert(self.Queues, Queue.Frame)

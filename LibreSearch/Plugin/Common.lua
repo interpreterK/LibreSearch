@@ -34,8 +34,23 @@ Vars.Remove = function(Inst)
 	end)
 end
 
-function Vars.write(Var, Func)
-	return setmetatable({[Var] = Func}, Vars)
+Vars.Enter_Leave = function(gui)
+	gui.MouseEnter:Connect(function()
+		Vars.ptrace(function()
+			Vars.plugin:GetMouse().Icon = 'rbxasset://SystemCursors/PointingHand'
+		end)
+	end)
+	gui.MouseLeave:Connect(function()
+		Vars.ptrace(function()
+			Vars.plugin:GetMouse().Icon = 'rbxasset://SystemCursors/Arrow'
+		end)
+	end)
+end
+
+function Vars.write(array)
+	for i,v in next, array do
+		Vars[i] = v
+	end
 end
 
 return Vars
